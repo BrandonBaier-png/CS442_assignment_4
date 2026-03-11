@@ -60,7 +60,7 @@ void readHistory (int& stdin, vector<string>& history) {
     dup2(stdin, 0);
     // might need fflush, see dup2 example to fix
     //fflush(fd); //??
-    // close the file
+    // close the filee
 
     close(fd);
 }
