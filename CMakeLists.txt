@@ -7,4 +7,6 @@ include_directories(.)
 
 add_executable(CS442_assignment_4
         Main.cpp
-        Main.h)
+        Main.h
+        part_1_to_3.cpp
+        part_1_to_3.h)

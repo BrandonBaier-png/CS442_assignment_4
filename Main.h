@@ -1,6 +1,9 @@
-//
-// Created by maardend on 3/10/26.
-//
+/* Brandon Baier - Assignment 4
+ * Main program
+ *
+ *
+ *
+ */
 
 #ifndef CS442_ASSIGNMENT_4_MAIN_H
 #define CS442_ASSIGNMENT_4_MAIN_H
