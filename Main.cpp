@@ -74,7 +74,7 @@ void writeHistory (vector<string>& history) {
 
     // open the
     //write()
-    // close the file
+    // close the files
 }
 
 // Tokenizes the vector. Useful for later
