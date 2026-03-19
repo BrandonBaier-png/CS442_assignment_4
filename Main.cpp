@@ -87,11 +87,15 @@ int main() {
             userCommand[i] = (char *) tokenVec[i].c_str();
         }
         userCommand[-1] = NULL;
-        // add user entry to the history vector before tokenization
 
         // 3) process command
 
-        //
+        // command entry scrutinized for certain scenarios via string comparison & counting
+        /* 1) Exit is called
+         * 2) "Enter" is pressed with no other commands
+         * 3) simple one word command
+         * 4) command with piping or redirection
+         */
 
 
         // tokenization & printing of info
