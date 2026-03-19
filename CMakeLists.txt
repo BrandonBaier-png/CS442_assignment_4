@@ -9,4 +9,6 @@ add_executable(CS442_assignment_4
         Main.cpp
         Main.h
         part_1_to_3.cpp
-        part_1_to_3.h)
+        part_1_to_3.h
+        history.cpp
+        history.h)
