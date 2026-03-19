@@ -64,7 +64,9 @@ void readHistory (vector<string>& history) {
     // fflush forces what is being held in the buffer to be pushed to the output
 
     cout << "back to original input????? :3" << endl;
-
+    // so turns out, the stdin input errors out whenever the input is changed, needs to be cleared of errors whenever input is changed
+    cin.clear();
+    clearerr(stdin);
     close(fd);
 }
 
@@ -103,15 +105,14 @@ int main() {
     string userInput;
     vector<string> history;
 
-    int stdInputSave = dup(0);
 
+    int stdInputSave = dup(0);
     // import the command history from history.txt
     readHistory(history);
-
     cout << "hopefully input is back to normal after this" << endl;
-    fflush(stdin);
     dup2(stdInputSave, 0);
 
+    for (int i = 0; i < history.size(); i++) {}
 
     stdInVerification();
 
