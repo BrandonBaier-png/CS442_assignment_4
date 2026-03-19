@@ -37,30 +37,33 @@ void openHistoryFile() {
 }
 
 // gets the contents from the history.txt, assignment 3 part 1 works for this
-void readHistory (int& stdin, vector<string>& history) {
+void readHistory (vector<string>& history) {
+
+    // save the dup() original info here
+
+
     // open the file in read only
-    int fd = open("history.txt", O_CREAT | O_RDWR);
+    string file_name = "history.txt";
+    int fd = open((char*)file_name.c_str(), O_CREAT | O_RDWR, 0666);
     if (fd < 0) {
         cout << "Error opening history.txt" << endl;
         exit(1);
     }
+    cout << "history has been opened :3" << endl;
     // changing input to the file
     dup2(fd, 0);
 
     // iterate over everything in the history.txt & add it to history vector
-
     string line;
-    // trying to get it to
-    while (getline(cin, line)) {
+    while (cin >> line) {
         history.push_back(line);
     }
-    cout << "was able to make it out :3" << endl;
+    // ---------------------------------------------- TRY PIPING BEFORE CHAINGING OUTPUT / INPUT -----------------------------------------------------------------
 
     // reverting back to standard input
-    dup2(stdin, 0);
-    // might need fflush, see dup2 example to fix
-    //fflush(fd); //??
-    // close the filee
+    // fflush forces what is being held in the buffer to be pushed to the output
+
+    cout << "back to original input????? :3" << endl;
 
     close(fd);
 }
@@ -86,43 +89,60 @@ vector <string> getTokenVector(string userLine) {
     return tmpVec;
 }
 
+// if cin is back to normal, it should wait for user keyboard to enter info
+void stdInVerification() {
+    cout << "verifying cin is back to normal" << endl;
+    string tempInput;
+    cin >> tempInput;
+    cin.ignore();
+    cout << tempInput << endl;
+}
 
 int main() {
 
     string userInput;
     vector<string> history;
-    int stdin = dup(0);
-    int stdout = dup(1);
+
+    int stdInputSave = dup(0);
 
     // import the command history from history.txt
-    readHistory(stdin, history);
-    cout << "hopefully input is back to normal after this :3" << endl;
-    //fflush(stdin);
+    readHistory(history);
+
+    cout << "hopefully input is back to normal after this" << endl;
+    fflush(stdin);
+    dup2(stdInputSave, 0);
+
+
+    stdInVerification();
+
+    // commented out cause it causes an infinite loop :(
 
     // main program loop
-    while (userInput != "exit") {
-        //u ser enters info
-        cout << "Enter user input: ";
-        getline(cin, userInput);
+    // while (userInput != "exit") {
+    //     //u ser enters info
+    //     cout << "Enter user input: ";
+    //     getline(cin, userInput);
+    //
+    //     // Converting
+    //     vector<string> tokenVec = getTokenVector(userInput);
+    //     int tokenNum = tokenVec.size();
+    //     char* userCommand[tokenNum];
+    //     for (int i = 0; i < tokenVec.size(); i++) {
+    //         userCommand[i] = (char *) tokenVec[i].c_str();
+    //     }
+    //     userCommand[-1] = NULL;
+    //     // add user entry to the history vector before tokenization
+    //
+    //
+    //
+    //     // tokenization & printing of info
+    //     vector <string> userVec = getTokenVector(userInput);
+    //     for (int i = 0; i < userVec.size(); i++) {
+    //         cout << userVec[i] << endl;
+    //     }
+    // }
 
-        // Converting
-        vector<string> tokenVec = getTokenVector(userInput);
-        int tokenNum = tokenVec.size();
-        char* userCommand[tokenNum];
-        for (int i = 0; i < tokenVec.size(); i++) {
-            userCommand[i] = (char *) tokenVec[i].c_str();
-        }
-        userCommand[-1] = NULL;
-        // add user entry to the history vector before tokenization
 
-
-
-        // tokenization & printing of info
-        vector <string> userVec = getTokenVector(userInput);
-        for (int i = 0; i < userVec.size(); i++) {
-            cout << userVec[i] << endl;
-        }
-    }
 
     //export the command history to history.txt
     //writeHistory();
