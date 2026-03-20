@@ -46,15 +46,20 @@ vector <string> getTokenVector(const string &userInput) {
     return tmpVec;
 }
 
-// if cin is back to normal, it should wait for user keyboard to enter info
-// void stdInVerification() {
-//     cout << "verifying cin is back to normal" << endl;
-//     string tempInput;
-//     cin >> tempInput;
-//     cin.ignore();
-//     cout << tempInput << endl;
-// }
+/* this function should be able to run anything that requires a linux command to be run.
+ * 1) pipes are created to communicate with the child process
+ * 2) process is forked to create an environment for the command to be run
+ * 3) parent process waits for child process to run, child process runs the command and writes information to the parent
+ * 4) once all finished, parent outputs the information gained to the command line, (in the future this will be able to change with piping & input redirection)
+ */
+void pipingInstance() {
 
+}
+
+
+/* Main contains the main loop of the program, responsible for handling logic involving
+ *
+ */
 int main() {
 
     history h;
@@ -78,6 +83,13 @@ int main() {
         // 2) adding userInput to history vector.
         h.addHistory(history, userInput);
 
+        // 1) printing current directory
+        if (userInput == "pwd") {
+            cout << "printing current directory :3" << endl;
+            cout << getcwd(NULL, 0) << endl;
+        }
+
+
 
         // Converting
         vector<string> tokenVec = getTokenVector(userInput);
@@ -96,12 +108,12 @@ int main() {
          * 3) simple one word command
          * 4) command with piping or redirection
          */
+        bool simple = false;
 
+        cout << "output token vec info" << endl;
+        for (int i = 0; i < tokenVec.size(); i++) {
 
-        // tokenization & printing of info
-        vector <string> userVec = getTokenVector(userInput);
-        for (int i = 0; i < userVec.size(); i++) {
-            cout << userVec[i] << endl;
+            cout << "value " << i << ": " << tokenVec[i] << endl;
         }
     }
 
