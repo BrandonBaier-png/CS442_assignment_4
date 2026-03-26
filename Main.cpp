@@ -29,8 +29,10 @@
 #include <array>
 using namespace std;
 
+
 #include "Main.h"
 #include "history.h"
+#include "altInputOutput.h"
 // -------------------------------------------------------------- HISTORY -----------------------------------------------------
 char* userCommand[4];
 
@@ -64,6 +66,9 @@ void pipingInstance(vector<string>& tokenVec) {
     // parse through the tokenized vector to determine piping or redirection
     int fd_toChild[2]; // creation of child pipe
     int fd_toParent[2]; // creation of parent pipe
+
+    // Need to detect if the token vector contains a changed input, output, or piping instance before anything goes further
+
 
     // creating piping to child -> parent
     if(pipe(fd_toChild) == -1){
@@ -131,6 +136,8 @@ void pipingInstance(vector<string>& tokenVec) {
 
     }
 
+    // after the fork & return from the sub-program,
+
 }
 
 
@@ -140,9 +147,19 @@ void pipingInstance(vector<string>& tokenVec) {
  */
 int main() {
 
+
+    altInputOutput alt;
     history h;
     string userInput;
     vector<string> history;
+
+
+    // temporary situation getting part 4 to work
+    getline(cin, userInput);
+    char inputRedir = '<';
+    alt.checkForAltInOut(userInput, inputRedir);
+
+    return 0;
 
     int stdInputSave = dup(0);
     int stdOutputSave = dup(1);

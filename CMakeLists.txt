@@ -11,4 +11,6 @@ add_executable(CS442_assignment_4
         part_1_to_3.cpp
         part_1_to_3.h
         history.cpp
-        history.h)
+        history.h
+        altInputOutput.cpp
+        altInputOutput.h)
