@@ -3,15 +3,9 @@
  * Class created to house functions related to input redirection & piping from part 4 & 5
 */
 
-#include <iostream>
+
 #include <string>
 #include <vector>
-#include <sstream>
-#include <unistd.h>
-#include <sys/types.h>
-#include <fstream>
-#include <fcntl.h>
-#include <cstring>
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -29,10 +23,11 @@ map<char, int> charSearch = {
     { '|',  124}
 };
 
-int checkForAltInOut(vector <string> userCommand, char huntVar)
-{
-    vector <int> alternatives;
 
+
+int altInputOutput::checkForAltInOut(vector<string> userCommand) {
+    vector <int> alternatives;
+    char huntVar = '<';
     string output =  "undef";
     int pos = -1;
     // loop through to find any instances of searched character
@@ -48,7 +43,7 @@ int checkForAltInOut(vector <string> userCommand, char huntVar)
     if (pos == -1) {
         return -1;
     }
-    else {
-        return charSearch[pos];
-    }
+
+    cout << huntVar << " was found, in spot: " << pos << endl;
+    return charSearch[huntVar];
 }

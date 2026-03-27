@@ -145,6 +145,17 @@ void pipingInstance(vector<string>& tokenVec) {
 /* Main contains the main loop of the program, responsible for handling logic involving
  *
  */
+
+void tempPart4(altInputOutput& alt) {
+    cout << "Temporary part 4 testing, please enter a command with piping (or not :3)" << endl;
+
+    string tempUserInput;
+    getline(cin, tempUserInput);
+    char inputRedir = (char)'<';
+    vector<string> tempVector = getTokenVector(tempUserInput);
+    alt.checkForAltInOut(tempVector);
+}
+
 int main() {
 
 
@@ -153,12 +164,8 @@ int main() {
     string userInput;
     vector<string> history;
 
-
-    // temporary situation getting part 4 to work
-    getline(cin, userInput);
-    char inputRedir = '<';
-    alt.checkForAltInOut(userInput, inputRedir);
-
+    // temporary function to have part 4 testing in main
+    tempPart4(alt);
     return 0;
 
     int stdInputSave = dup(0);
@@ -175,18 +182,30 @@ int main() {
         cout << "Enter user input: ";
         getline(cin, userInput);
 
+
+        // ---------------------------- recording history ------------------------
         // 2) adding userInput to history vector.
         h.addHistory(history, userInput);
 
-        // 1) printing current directory
+        // --------------------------------------- Interpretation of user commands starts ------------------
+
+
+        // first 2 are specified, should break from while loop if entered
+        // pwd = print current directory
         if (userInput == "pwd") {
-            cout << "printing current directory :3" << endl;
             cout << getcwd(NULL, 0) << endl;
+            break;
+        }
+        // history = print current history
+        else if (userInput == "history") {
+            for (int i = 0; i < history.size(); i++) {
+                cout << history[i] << endl;
+            }
+            break;
         }
 
+        // if the command is not a simple one [pwd or history], then it needs to be tokenized to check for redirection or piping
 
-
-        // Converting
         vector<string> tokenVec = getTokenVector(userInput);
         int tokenNum = tokenVec.size();
         char* userCommand[tokenNum];

@@ -9,7 +9,7 @@
 class altInputOutput {
     public:
     map<char, int> charSearch;
-    int checkForAltInOut(vector <string> userCommand, );
+    int checkForAltInOut(vector<string> userCommand);//, char huntVar);
 
 };
 
