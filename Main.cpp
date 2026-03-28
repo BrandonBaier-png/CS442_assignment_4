@@ -61,12 +61,7 @@ vector <string> getTokenVector(const string &userInput) {
 // creates the char* array used for
 
 tuple<int, bool> checkForRedir(altInputOutput& alt, const vector<string>& userInput) {
-    cout << "Temporary part 4 testing, please enter a command with piping (or not :3)" << endl;
-
-    string tempUserInput;
-    getline(cin, tempUserInput);
-
-    bool functional = false;
+    bool functional = true;
 
     // check for redirection in operator
     int inFilePos = alt.checkForAltInOut(userInput, '<');
@@ -74,7 +69,7 @@ tuple<int, bool> checkForRedir(altInputOutput& alt, const vector<string>& userIn
         cout << "< was found at position " << inFilePos << endl;
         // function runs redirected
         functional = alt.inputRedir(userInput[inFilePos + 1]);
-        return make_tuple(alt.charSearch['<'], functional);
+        return make_tuple(alt.charSearch.at("<"), functional);
     }
 
     // check for redirection out operator
@@ -82,7 +77,7 @@ tuple<int, bool> checkForRedir(altInputOutput& alt, const vector<string>& userIn
     if (outFilePos != -1) {
         cout << "> was found at position " << inFilePos << endl;
         functional = alt.outputRedir(userInput[outFilePos + 1]);
-        return make_tuple(alt.charSearch['>'], functional);
+        return make_tuple(alt.charSearch.at(">"), functional);
     }
 
     // check for piping operator
@@ -111,13 +106,7 @@ void pipingInstance(vector<string>& tokenVec, int& stdInputSave, int& stdOutputS
     }
 
     // creating the userCommand char* to be utilized in child process execvp function
-    int tokenNum = tokenVec.size();
 
-
-    for (int i = 0; i <=tokenVec.size(); i++) {
-        userCommand[i] = (char*) tokenVec[i].c_str();
-    }
-    userCommand[-1] = NULL;
 
     cout << "ready for piping instance" << endl;
 
@@ -126,9 +115,26 @@ void pipingInstance(vector<string>& tokenVec, int& stdInputSave, int& stdOutputS
     tuple<int, bool> result = checkForRedir(alt, tokenVec);
 
     // if redirection failed (checking via tuple 2), cancel entering the pipe
-    if (get<bool>(result) != false) {
+    if (!get<bool>(result)) {
         perror("There is an issue with redirection or piping, exiting check");
+        exit(1);
     }
+
+    // if there was a redirection that took place, figure out which one and change the
+    vector<string> runVec;
+    if (get<int>(result) != -1) { // input was applied, subtract
+        copy(tokenVec.begin(), tokenVec.end()-2, back_inserter(runVec));
+
+    }
+    else { // simple command, no redir or piping
+        copy(tokenVec.begin(), tokenVec.end(), back_inserter(runVec));
+    }
+
+    char* finalCommand[runVec.size() + 1];
+    for (int i = 0; i <=runVec.size(); i++) {
+        finalCommand[i] = (char*) runVec[i].c_str();
+    }
+    finalCommand[-1] = NULL;
 
     pid_t child_pid = fork();
 
@@ -143,7 +149,7 @@ void pipingInstance(vector<string>& tokenVec, int& stdInputSave, int& stdOutputS
         close(fd_toParent[0]);
 
         // running the linux command. done within the if statement to check if it's run
-        if (execvp(userCommand[0], userCommand) < 0) {
+        if (execvp(finalCommand[0], finalCommand) < 0) {
             cout << "ERROR: couldn't change the execution image for the child process :3" << endl;
         }
 
@@ -176,7 +182,8 @@ void pipingInstance(vector<string>& tokenVec, int& stdInputSave, int& stdOutputS
 
     }
 
-    switch (get<int>(result)) {
+    int temp = get<int>(result);
+    switch (temp) {
         case -1:
             return;
         case 60:

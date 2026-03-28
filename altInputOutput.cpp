@@ -18,11 +18,7 @@ using namespace std;
  *  rest are based on their decimal ASCII unicode values
  *  [< : 60] [> : 62] [| : 124]
  */
-map<char, int> charSearch = {
-    { '<',  60},
-    { '>',  62},
-    { '|',  124}
-};
+
 
 
 
@@ -45,7 +41,7 @@ int altInputOutput::checkForAltInOut(vector<string> userCommand, char huntVar) {
         return -1;
     }
     cout << huntVar << " was found, in spot: " << pos << endl;
-    return charSearch[huntVar];
+    return pos;
 }
 
 // redirects the input to target file
@@ -61,7 +57,7 @@ bool altInputOutput::inputRedir(string fileName) {
 
 // redirects the output to target fi__struct_FILE_defined
 bool altInputOutput::outputRedir(string fileName) {
-    int fd = open((char*)fileName.c_str(), O_TRUNC | O_WRONLY, 0666);
+    int fd = open((char*)fileName.c_str(), O_CREAT | O_TRUNC | O_WRONLY, 0666);
     if (fd < 0) {
         cout << "Error opening " << fileName << endl;
         return false;

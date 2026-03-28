@@ -8,7 +8,11 @@
 
 class altInputOutput {
     public:
-    map<char, int> charSearch;
+    map<string, int> charSearch = {
+        { "<",  60},
+        { ">",  62},
+        { "|",  124}
+    };
     int checkForAltInOut(vector<string> userCommand, char huntVar);//, char huntVar);
     bool inputRedir(string fileName);
     bool outputRedir(string fileName);
