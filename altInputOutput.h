@@ -9,7 +9,12 @@
 class altInputOutput {
     public:
     map<char, int> charSearch;
-    int checkForAltInOut(vector<string> userCommand);//, char huntVar);
+    int checkForAltInOut(vector<string> userCommand, char huntVar);//, char huntVar);
+    bool inputRedir(string fileName);
+    bool outputRedir(string fileName);
+
+    static void resetIn(int inputSave);
+    static void resetOut(int outputSave);
 
 };
 

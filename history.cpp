@@ -14,6 +14,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#include "altInputOutput.h"
 #include "history.h"
 
 
@@ -38,11 +39,9 @@ void history::readHistory (vector<string>& history, int inputSave) {
         history.push_back(line);
     }
 
+    altInputOutput a;
     // so turns out, the stdin input errors out whenever the input is changed, needs to be cleared of errors whenever input is changed
-    cin.clear();
-    clearerr(stdin);
-    close(fd);
-    dup2(inputSave, 0);
+    a.resetIn(inputSave);
 
 }
 

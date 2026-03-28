@@ -60,9 +60,38 @@ vector <string> getTokenVector(const string &userInput) {
 
 // creates the char* array used for
 
+tuple<int, bool> checkForRedir(altInputOutput& alt, const vector<string>& userInput) {
+    cout << "Temporary part 4 testing, please enter a command with piping (or not :3)" << endl;
+
+    string tempUserInput;
+    getline(cin, tempUserInput);
+
+    bool functional = false;
+
+    // check for redirection in operator
+    int inFilePos = alt.checkForAltInOut(userInput, '<');
+    if (inFilePos != -1){
+        cout << "< was found at position " << inFilePos << endl;
+        // function runs redirected
+        functional = alt.inputRedir(userInput[inFilePos + 1]);
+        return make_tuple(alt.charSearch['<'], functional);
+    }
+
+    // check for redirection out operator
+    int outFilePos = alt.checkForAltInOut(userInput, '>');
+    if (outFilePos != -1) {
+        cout << "> was found at position " << inFilePos << endl;
+        functional = alt.outputRedir(userInput[outFilePos + 1]);
+        return make_tuple(alt.charSearch['>'], functional);
+    }
+
+    // check for piping operator
+    return make_tuple(-1, functional);
+
+}
 
 // creating a function that
-void pipingInstance(vector<string>& tokenVec) {
+void pipingInstance(vector<string>& tokenVec, int& stdInputSave, int& stdOutputSave) {
     // parse through the tokenized vector to determine piping or redirection
     int fd_toChild[2]; // creation of child pipe
     int fd_toParent[2]; // creation of parent pipe
@@ -91,6 +120,15 @@ void pipingInstance(vector<string>& tokenVec) {
     userCommand[-1] = NULL;
 
     cout << "ready for piping instance" << endl;
+
+    // check for any redirection or piping & make the change accordingly
+    altInputOutput alt;
+    tuple<int, bool> result = checkForRedir(alt, tokenVec);
+
+    // if redirection failed (checking via tuple 2), cancel entering the pipe
+    if (get<bool>(result) != false) {
+        perror("There is an issue with redirection or piping, exiting check");
+    }
 
     pid_t child_pid = fork();
 
@@ -130,11 +168,23 @@ void pipingInstance(vector<string>& tokenVec) {
         // everything before is fine/needs to run before the parent
         wait(0);
 
+
         // output what the child process spits out
         close(fd_toParent[0]);
 
 
+
     }
+
+    switch (get<int>(result)) {
+        case -1:
+            return;
+        case 60:
+            alt.resetIn(stdInputSave);
+        case 62:
+            alt.resetOut(stdOutputSave);
+    }
+
 
     // after the fork & return from the sub-program,
 
@@ -146,30 +196,22 @@ void pipingInstance(vector<string>& tokenVec) {
  *
  */
 
-void tempPart4(altInputOutput& alt) {
-    cout << "Temporary part 4 testing, please enter a command with piping (or not :3)" << endl;
 
-    string tempUserInput;
-    getline(cin, tempUserInput);
-    char inputRedir = (char)'<';
-    vector<string> tempVector = getTokenVector(tempUserInput);
-    alt.checkForAltInOut(tempVector);
-}
 
 int main() {
 
+    int stdInputSave = dup(0);
+    int stdOutputSave = dup(1);
 
-    altInputOutput alt;
     history h;
     string userInput;
     vector<string> history;
 
     // temporary function to have part 4 testing in main
-    tempPart4(alt);
-    return 0;
 
-    int stdInputSave = dup(0);
-    int stdOutputSave = dup(1);
+
+
+
 
     // import the command history from history.txt
     h.readHistory(history, stdInputSave);
@@ -230,7 +272,7 @@ int main() {
             cout << "value " << i << ": " << tokenVec[i] << endl;
         }
 
-        pipingInstance(tokenVec);
+        pipingInstance(tokenVec, stdInputSave, stdOutputSave);
     }
 
     //write history to the history file given historyVec & standard output save
