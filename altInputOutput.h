@@ -16,6 +16,7 @@ class altInputOutput {
     int checkForAltInOut(vector<string> userCommand, char huntVar);//, char huntVar);
     bool inputRedir(string fileName);
     bool outputRedir(string fileName);
+    void pipingRedir(vector<string> runVec, int charPos);
 
     static void resetIn(int inputSave);
     static void resetOut(int outputSave);

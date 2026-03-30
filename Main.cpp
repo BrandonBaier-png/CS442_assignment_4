@@ -35,6 +35,7 @@ using namespace std;
 #include "altInputOutput.h"
 // -------------------------------------------------------------- HISTORY -----------------------------------------------------
 char* userCommand[4];
+int inpOupSym = -1;
 
 // Tokenizes the vector. Useful for later
 vector <string> getTokenVector(const string &userInput) {
@@ -63,12 +64,14 @@ vector <string> getTokenVector(const string &userInput) {
 tuple<int, bool> checkForRedir(altInputOutput& alt, const vector<string>& userInput) {
     bool functional = true;
 
+    inpOupSym = -1;
     // check for redirection in operator
     int inFilePos = alt.checkForAltInOut(userInput, '<');
     if (inFilePos != -1){
         cout << "< was found at position " << inFilePos << endl;
         // function runs redirected
         functional = alt.inputRedir(userInput[inFilePos + 1]);
+        inpOupSym = inFilePos;
         return make_tuple(alt.charSearch.at("<"), functional);
     }
 
@@ -77,7 +80,17 @@ tuple<int, bool> checkForRedir(altInputOutput& alt, const vector<string>& userIn
     if (outFilePos != -1) {
         cout << "> was found at position " << inFilePos << endl;
         functional = alt.outputRedir(userInput[outFilePos + 1]);
+        inpOupSym = outFilePos;
         return make_tuple(alt.charSearch.at(">"), functional);
+    }
+
+    // check for piping operator
+    int pipeFilePos = alt.checkForAltInOut(userInput, '|');
+    if (pipeFilePos != -1) {
+        cout << "| was found at position " << inFilePos << endl;
+        functional = true;
+        inpOupSym = pipeFilePos;
+        return make_tuple(alt.charSearch.at("|"), functional);
     }
 
     // check for piping operator
@@ -120,14 +133,19 @@ void pipingInstance(vector<string>& tokenVec, int& stdInputSave, int& stdOutputS
         exit(1);
     }
 
-    // if there was a redirection that took place, figure out which one and change the
+    // if there was a redirection that took place, copy into the runVec
     vector<string> runVec;
     if (get<int>(result) != -1) { // input was applied, subtract
         copy(tokenVec.begin(), tokenVec.end()-2, back_inserter(runVec));
-
     }
     else { // simple command, no redir or piping
         copy(tokenVec.begin(), tokenVec.end(), back_inserter(runVec));
+    }
+
+    // if piping was found in the command entered, go to pipingRedir to run the piping instance
+    if (get<int>(result) == 124 ) {
+            alt.pipingRedir(tokenVec, inpOupSym);
+            return;
     }
 
     char* finalCommand[runVec.size() + 1];
@@ -135,6 +153,9 @@ void pipingInstance(vector<string>& tokenVec, int& stdInputSave, int& stdOutputS
         finalCommand[i] = (char*) runVec[i].c_str();
     }
     finalCommand[-1] = NULL;
+
+    // if the command includes piping, send the finalCommand to run in an alternative function
+
 
     pid_t child_pid = fork();
 
@@ -177,9 +198,6 @@ void pipingInstance(vector<string>& tokenVec, int& stdInputSave, int& stdOutputS
 
         // output what the child process spits out
         close(fd_toParent[0]);
-
-
-
     }
 
     int temp = get<int>(result);
@@ -191,8 +209,6 @@ void pipingInstance(vector<string>& tokenVec, int& stdInputSave, int& stdOutputS
         case 62:
             alt.resetOut(stdOutputSave);
     }
-
-
     // after the fork & return from the sub-program,
 
 }
@@ -214,23 +230,15 @@ int main() {
     string userInput;
     vector<string> history;
 
-    // temporary function to have part 4 testing in main
-
-
-
-
-
     // import the command history from history.txt
     h.readHistory(history, stdInputSave);
 
     //main program loop
     while (userInput != "exit") {
-
         cout << endl;
         //u ser enters info
         cout << "Enter user input: ";
         getline(cin, userInput);
-
 
         // ---------------------------- recording history ------------------------
         // 2) adding userInput to history vector.
@@ -250,6 +258,9 @@ int main() {
             for (int i = 0; i < history.size(); i++) {
                 cout << history[i] << endl;
             }
+            break;
+        }
+        else if (userInput == "exit") {
             break;
         }
 
@@ -273,11 +284,11 @@ int main() {
          */
         bool simple = false;
 
-        cout << "output token vec info" << endl;
-        for (int i = 0; i < tokenVec.size(); i++) {
-
-            cout << "value " << i << ": " << tokenVec[i] << endl;
-        }
+        // cout << "output token vec info" << endl;
+        // for (int i = 0; i < tokenVec.size(); i++) {
+        //
+        //     cout << "value " << i << ": " << tokenVec[i] << endl;
+        // }
 
         pipingInstance(tokenVec, stdInputSave, stdOutputSave);
     }
