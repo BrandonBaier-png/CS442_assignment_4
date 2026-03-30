@@ -98,7 +98,7 @@ void altInputOutput::pipingRedir(vector<string> runVec, int charPos) {
     for (int i = 0; i <=vecCmd2.size(); i++) {
         cmd2[i] = (char*) vecCmd2[i].c_str();
     }
-    cmd2[vecCmd1.size()] = NULL;
+    cmd2[vecCmd2.size()] = NULL;
 
 
     // run the double instance of forking to and get the output of the first run to be the input of the second run
@@ -138,7 +138,7 @@ void altInputOutput::pipingRedir(vector<string> runVec, int charPos) {
         }
 
     }else if(pid>0){ /*inside the parent*/
-        wait(0); // wait for the first child
+        wait(nullptr); // wait for the first child
 
         /*We change the stdin for the second child*/
         dup2( fds[0] , 0);
@@ -153,15 +153,17 @@ void altInputOutput::pipingRedir(vector<string> runVec, int charPos) {
         if( pid2 < 0){
             cout<<"Error: Cannot create a process"<<endl;
             exit(4);
-        } else if(pid2==0){ // I am inside the second child
+        }
+        if(pid2==0){ // I am inside the second child
             //change the execution image of the second child with the second command (program) entered by the user.
+
             if(execvp(cmd2[0], cmd2)<0){
                 cout<<"Error: Cannot change the process exe image of the second child process "<<endl;
                 exit(5);
             }
 
         } else if(pid2>0){
-            wait(0); // wait for the second child
+            wait(nullptr); // wait for the second child
             //we get things stdin and out back to normal
 
             dup2(originalSTDIN, 0);
