@@ -1,0 +1,12 @@
+12: exit
+11: ls -l | sort
+10: wc < history.txt
+9: history
+8: exit
+7: ls -l
+6: pwd
+5: history
+4: exit
+3: ls -l | wc
+2: exit
+1: ls -l | sort

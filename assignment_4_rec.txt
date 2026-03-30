@@ -1,0 +1,135 @@
+Script started on 2026-03-29 23:06:36-05:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="159" LINES="42"]
+[?2004h]0;maardend@MaardsYard: ~/Documents/CS442_assignment_4[01;32mmaardend@MaardsYard[00m:[01;34m~/Documents/CS442_assignment_4[00m$ nano testing_file.txt [Knano testing_file.txt touch testing_file.txt[6Psudo dhclient -vtouch testing_file.txtnano testing_file.txt [Knano testing_file.txt touch testing_file.txt[6Psudo dhclient -vnmcli networking onip a[Ksudo nmcli networking ontui[K[K[K[K[K[K[K[K[K[K[Kg++ *cpp -o assignment_4
+[?2004l[?2004h]0;maardend@MaardsYard: ~/Documents/CS442_assignment_4[01;32mmaardend@MaardsYard[00m:[01;34m~/Documents/CS442_assignment_4[00m$ ./assignment_4
+[?2004l
+Enter user input: hisot  tory
+5: history
+4: exit
+3: ls -l | wc
+2: exit
+1: ls -l | sort
+end of the program :3
+[?2004h]0;maardend@MaardsYard: ~/Documents/CS442_assignment_4[01;32mmaardend@MaardsYard[00m:[01;34m~/Documents/CS442_assignment_4[00m$ ./assignment_4
+[?2004l
+Enter user input: pwd
+/home/maardend/Documents/CS442_assignment_4
+end of the program :3
+[?2004h]0;maardend@MaardsYard: ~/Documents/CS442_assignment_4[01;32mmaardend@MaardsYard[00m:[01;34m~/Documents/CS442_assignment_4[00m$ ./assignment_4
+[?2004l
+Enter user input: ls -l
+ready for piping instance
+total 172
+-rw-rw-r-- 1 maardend maardend   5393 Mar 29 22:56 altInputOutput.cpp
+-rw-rw-r-- 1 maardend maardend    620 Mar 29 21:27 altInputOutput.h
+-rwxrwxr-x 1 maardend maardend 115712 Mar 29 23:07 assignment_4
+-rw-rw-r-- 1 maardend maardend      0 Mar 29 23:06 assignment_4_rec.txt
+drwxrwxr-x 5 maardend maardend   4096 Mar 29 22:56 cmake-build-debug
+-rw-rw-r-- 1 maardend maardend    320 Mar 26 13:57 CMakeLists.txt
+-rw-rw-r-- 1 maardend maardend   2878 Mar 27 21:52 history.cpp
+-rw-rw-r-- 1 maardend maardend    374 Mar 19 17:43 history.h
+-rw-rw-r-- 1 maardend maardend     64 Mar 29 23:07 history.txt
+-rw-rw-r-- 1 maardend maardend   9817 Mar 29 22:26 Main.cpp
+-rw-rw-r-- 1 maardend maardend    178 Mar 19 17:38 Main.h
+-rw-rw-r-- 1 maardend maardend    284 Mar 10 20:15 part_1_to_3.cpp
+-rw-rw-r-- 1 maardend maardend    192 Mar 10 20:11 part_1_to_3.h
+
+Enter user input: exit
+end of the program :3
+[?2004h]0;maardend@MaardsYard: ~/Documents/CS442_assignment_4[01;32mmaardend@MaardsYard[00m:[01;34m~/Documents/CS442_assignment_4[00m$ ./assignment_4
+[?2004l
+Enter user input: hisot  tory
+9: history
+8: exit
+7: ls -l
+6: pwd
+5: history
+4: exit
+3: ls -l | wc
+2: exit
+1: ls -l | sort
+end of the program :3
+[?2004h]0;maardend@MaardsYard: ~/Documents/CS442_assignment_4[01;32mmaardend@MaardsYard[00m:[01;34m~/Documents/CS442_assignment_4[00m$ ./assignment_4
+[?2004l
+Enter user input: history.txt           ls -l         cat     cat history.txt > new_    retirec     direction_his.txt
+ready for piping instance
+> was found, in spot: 2
+> was found at position -1
+
+Enter user input: ls
+ready for piping instance
+altInputOutput.cpp  assignment_4	  cmake-build-debug  history.cpp  history.txt  Main.h		part_1_to_3.h
+altInputOutput.h    assignment_4_rec.txt  CMakeLists.txt     history.h	  Main.cpp     part_1_to_3.cpp	redirection_his.txt
+
+Enter user input: cat re	 edirection_his.txt
+ready for piping instance
+9: history
+8: exit
+7: ls -l
+6: pwd
+5: history
+4: exit
+3: ls -l | wc
+2: exit
+1: ls -l | sort
+
+Enter user input: historyu .xtx   txt < c wc
+ready for piping instance
+< was found, in spot: 1
+< was found at position 1
+Error opening wc
+There is an issue with redirection or piping, exiting check: No such file or directory
+[?2004h]0;maardend@MaardsYard: ~/Documents/CS442_assignment_4[01;32mmaardend@MaardsYard[00m:[01;34m~/Documents/CS442_assignment_4[00m$ wc < history.txt
+[?2004l 9 25 92
+[?2004h]0;maardend@MaardsYard: ~/Documents/CS442_assignment_4[01;32mmaardend@MaardsYard[00m:[01;34m~/Documents/CS442_assignment_4[00m$ ls - [Kl;[K | sot[Krt
+[?2004ldrwxrwxr-x 5 maardend maardend   4096 Mar 29 22:56 cmake-build-debug
+-rw-rw-r-- 1 maardend maardend    178 Mar 19 17:38 Main.h
+-rw-rw-r-- 1 maardend maardend    192 Mar 10 20:11 part_1_to_3.h
+-rw-rw-r-- 1 maardend maardend    284 Mar 10 20:15 part_1_to_3.cpp
+-rw-rw-r-- 1 maardend maardend   2878 Mar 27 21:52 history.cpp
+-rw-rw-r-- 1 maardend maardend    320 Mar 26 13:57 CMakeLists.txt
+-rw-rw-r-- 1 maardend maardend    374 Mar 19 17:43 history.h
+-rw-rw-r-- 1 maardend maardend   4096 Mar 29 23:10 assignment_4_rec.txt
+-rw-rw-r-- 1 maardend maardend   5393 Mar 29 22:56 altInputOutput.cpp
+-rw-rw-r-- 1 maardend maardend    620 Mar 29 21:27 altInputOutput.h
+-rw-rw-r-- 1 maardend maardend     92 Mar 29 23:08 history.txt
+-rw-rw-r-- 1 maardend maardend     92 Mar 29 23:09 redirection_his.txt
+-rw-rw-r-- 1 maardend maardend   9817 Mar 29 22:26 Main.cpp
+-rwxrwxr-x 1 maardend maardend 115712 Mar 29 23:07 assignment_4
+total 180
+[?2004h]0;maardend@MaardsYard: ~/Documents/CS442_assignment_4[01;32mmaardend@MaardsYard[00m:[01;34m~/Documents/CS442_assignment_4[00m$ ex[K[Kls -l | sortwc < history.txt[2P./assignment_4
+[?2004l
+Enter user input: history.        wr c < history.txt
+ready for piping instance
+< was found, in spot: 1
+< was found at position 1
+ 9 25 92
+
+Enter user input: ls -l | sort
+ready for piping instance
+| was found, in spot: 2
+| was found at position -1
+in second child, input was 11
+drwxrwxr-x 5 maardend maardend   4096 Mar 29 22:56 cmake-build-debug
+-rw-rw-r-- 1 maardend maardend    178 Mar 19 17:38 Main.h
+-rw-rw-r-- 1 maardend maardend    192 Mar 10 20:11 part_1_to_3.h
+-rw-rw-r-- 1 maardend maardend    284 Mar 10 20:15 part_1_to_3.cpp
+-rw-rw-r-- 1 maardend maardend   2878 Mar 27 21:52 history.cpp
+-rw-rw-r-- 1 maardend maardend    320 Mar 26 13:57 CMakeLists.txt
+-rw-rw-r-- 1 maardend maardend    374 Mar 19 17:43 history.h
+-rw-rw-r-- 1 maardend maardend   4096 Mar 29 23:10 assignment_4_rec.txt
+-rw-rw-r-- 1 maardend maardend   5393 Mar 29 22:56 altInputOutput.cpp
+-rw-rw-r-- 1 maardend maardend    620 Mar 29 21:27 altInputOutput.h
+-rw-rw-r-- 1 maardend maardend     92 Mar 29 23:08 history.txt
+-rw-rw-r-- 1 maardend maardend     92 Mar 29 23:09 redirection_his.txt
+-rw-rw-r-- 1 maardend maardend   9817 Mar 29 22:26 Main.cpp
+-rwxrwxr-x 1 maardend maardend 115712 Mar 29 23:07 assignment_4
+total 180
+I am the parent and done with the children work!
+
+Enter user input: exit
+end of the program :3
+[?2004h]0;maardend@MaardsYard: ~/Documents/CS442_assignment_4[01;32mmaardend@MaardsYard[00m:[01;34m~/Documents/CS442_assignment_4[00m$ exit is
+[?2004lexit
+bash: exit: is: numeric argument required
+
+Script done on 2026-03-29 23:12:35-05:00 [COMMAND_EXIT_CODE="2"]
